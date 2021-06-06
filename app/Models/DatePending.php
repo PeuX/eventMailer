@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DatePending extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 
     /**
      * Get the event
@@ -19,4 +18,7 @@ class DatePending extends Model
         return $this->belongsTo(Event::class);
     }
     
+    public function purgeDate(){
+        $this->where('timestamp', '<', time()-3600)->delete();
+    }
 }

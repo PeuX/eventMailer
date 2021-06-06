@@ -16,25 +16,25 @@
 CREATE DATABASE IF NOT EXISTS `eventmailer` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `eventmailer`;
 
--- Listage de la structure de la table eventmailer. date_pending
-CREATE TABLE IF NOT EXISTS `date_pending` (
-  `id` int(11) NOT NULL DEFAULT 0,
+-- Listage de la structure de la table eventmailer. date_pendings
+CREATE TABLE IF NOT EXISTS `date_pendings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `event_id` int(11) NOT NULL,
   `jour` date NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `timestamp` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_event_jour` (`event_id`,`jour`) USING BTREE,
-  CONSTRAINT `FK__event_datepending` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK_date_pending_event` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
--- Listage de la structure de la table eventmailer. event
-CREATE TABLE IF NOT EXISTS `event` (
-  `id` int(11) NOT NULL,
+-- Listage de la structure de la table eventmailer. events
+CREATE TABLE IF NOT EXISTS `events` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_unique` varchar(50) NOT NULL,
   `nom` varchar(50) NOT NULL DEFAULT '',
   `commentaire` text DEFAULT '',
@@ -44,14 +44,15 @@ CREATE TABLE IF NOT EXISTS `event` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
+  `admin` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
--- Listage de la structure de la table eventmailer. mail_du_jour
-CREATE TABLE IF NOT EXISTS `mail_du_jour` (
-  `id` int(11) NOT NULL,
+-- Listage de la structure de la table eventmailer. mail_du_jours
+CREATE TABLE IF NOT EXISTS `mail_du_jours` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `event_id` int(11) NOT NULL,
   `jour` date NOT NULL,
   `texte` text DEFAULT '',
@@ -62,8 +63,8 @@ CREATE TABLE IF NOT EXISTS `mail_du_jour` (
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK__event_maildujour` (`event_id`) USING BTREE,
-  CONSTRAINT `FK__event_maildujour` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK_mail_du_jour_event` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- Les données exportées n'étaient pas sélectionnées.
 

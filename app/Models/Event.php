@@ -26,4 +26,27 @@ class Event extends Model
     {
         return $this->hasMany(DatePending::class);
     }
+
+    /**
+     * renvoi la date des jour déja pris
+     */
+    public function unavailableDate()
+    {
+        $dateJoursPris = array();
+        $datesPending = $this->datePending;
+        $first = true;
+        foreach($datesPending as $dp){
+            if($first){
+                $first = false;
+                $dp->purgeDate();
+            }
+            $dateJoursPris[] = $dp->jour;
+        }
+        $MailsDuJour = $this->mailsDuJour;
+        foreach($MailsDuJour as $mj){
+            $dateJoursPris[] = $mj->jour;
+        }
+        sort($dateJoursPris);
+        return $dateJoursPris;
+    }
 }

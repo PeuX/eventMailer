@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+Route::get('/event/{uniq_id}',[EventController::class, 'showevent']);
+//Route::post('/event/{uniq_id}/resadate/{date}',[EventController::class, 'showevent']);
+
+//Route::post('/event/{uniq_id}/setdate',[EventController::class, 'placeDate']);
+Route::get('/mailable/{uniq_id}', function ($uniq_id) {
+    $event = App\Models\Event::where('id_unique',$uniq_id)->first();
+    return new App\Mail\EventMailDuJour($event);
 });

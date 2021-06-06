@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Console\Commands\SendEmails;
+use App\Models\Event;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,7 +26,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $events = Event::where('date_fin','>',now()->toDateString())->get();
+        foreach($events as $event){
+            $schedule->command(SendEmails::class, [$event->id_unique])->daily();
+        }
     }
 
     /**
