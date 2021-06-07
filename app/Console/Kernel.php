@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $events = Event::where('date_fin','>',now()->toDateString())->get();
+        $events = Event::where('date_fin','=>',now()->toDateString())->get();
         foreach($events as $event){
             $schedule->command(SendEmails::class, [$event->id_unique])->daily();
         }

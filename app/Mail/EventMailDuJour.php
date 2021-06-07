@@ -43,7 +43,9 @@ class EventMailDuJour extends Mailable
     public function build()
     {
         $dt = Carbon::parse($this->event->date_fin);
-        $subject = sprintf('Plus que %d Jours avant le Jour J',$dt->diffInDays(now()));
+        $diff = $dt->diffInDays(now()->startOfDay())
+        if($diff>0) $subject = sprintf('Plus que %d Jours avant le Jour J',$diff);
+        else $subject = 'C\'est le grand JOUR!!!';
         return $this->subject($subject)->view('email.mailDuJour');
     }
 }
