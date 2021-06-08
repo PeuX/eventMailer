@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `date_pendings` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_event_jour` (`event_id`,`jour`) USING BTREE,
   CONSTRAINT `FK_date_pending_event` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   `deleted_at` datetime DEFAULT NULL,
   `admin` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `mail_du_jours` (
   PRIMARY KEY (`id`),
   KEY `FK__event_maildujour` (`event_id`) USING BTREE,
   CONSTRAINT `FK_mail_du_jour_event` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
